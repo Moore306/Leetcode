@@ -1,30 +1,25 @@
-//============================================================================
-// Name        : Code.cpp
-// Author      : orange
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
-#include <map>
-#include <string>
-#include <iostream>
+#include<cstdio>
+#include<queue>
 using namespace std;
-
+struct node
+{
+    int x,y;
+    bool operator < (const node & a) const
+    {
+        return x<a.x;
+    }
+}k;
+priority_queue <node> q;
 int main()
 {
-    map<int, string> mapStudent;
-    mapStudent.insert(pair<int, string>(1, "student_one"));
-    //mapStudent.insert(pair<int, string>(1, "student_one22"));
-    //mapStudent[1]="sssff";
-    //mapStudent[1]="sssfsafaf";
-    mapStudent.insert(pair<int, string>(2, "student_two"));
-    mapStudent.insert(pair<int, string>(3, "student_three"));
-    map<int, string>::iterator  iter;
-    for(iter = mapStudent.begin(); iter != mapStudent.end(); iter++)
+    k.x=10,k.y=100; q.push(k);
+    k.x=12,k.y=60; q.push(k);
+    k.x=14,k.y=40; q.push(k);
+    k.x=6,k.y=80; q.push(k);
+    k.x=8,k.y=20; q.push(k);
+    while(!q.empty())
     {
-        cout<<iter->first<<" "<<iter->second<<endl;
+        node m=q.top(); q.pop();
+        printf("(%d,%d) ",m.x,m.y);
     }
-    system("pause");
-    return 0;
 }
