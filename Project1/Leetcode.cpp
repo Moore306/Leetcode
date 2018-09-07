@@ -1,83 +1,65 @@
-//Longest Common Substring  最长公共子串
-//dp[i][j]代表以s1【i】和s2【j】为结尾的最长公共子串的长度
-#include<algorithm>	
 #include<iostream>
 #include<string>
+#include<set>
+/*
+asdfjkl
+5
+as
+asd
+df
+fjkl
+jkl
+*/
 using namespace std;
+void partition(string& w, set<string>& dic, int &st);
 
-string get_lst_sub(string& s1, string& s2);
 int main()
 {
-	string s1 = "eabceabcf", s2 = "2eabcfb";
-	string s=get_lst_sub(s1, s2);
-	cout << "s1=" << s1 <<endl<< " s2= " << s2 << endl;
+	set<string> dict;
+	int N;
+	string s, word;
+	cin >> word;
+	cin >> N;
+	for (int i = 0; i<N; i++)
+	{
+		cin >> s;
 
-	cout << "result s= " << s << endl;
+		dict.insert(s);
+
+	}
+	int st = 0;
+	int ed = 0;
+	 while(st!=word.length())
+	{
+		partition(word, dict, st);
+	}
+	//cout << "st  " << st << endl;
+
 	system("pause");
 	return 0;
 }
-string get_lst_sub(string& s1, string& s2)
+void partition(string& w, set<string>& dic, int &st)
 {
-	int l1 = s1.length();
-	int l2 = s2.length();
-	int i1, i2, i3, i4;
-	i1 = i2 = i3 = i4 = 0;
-	int max_length = 0;
-	int max_idx1=0,max_idx2 = 0;
-	int dp[30][30] = { 0 };
-	for (int i = 0; i < 10; i++)
+	string  temp = w.substr(st, w.length() - st);
+	string long_s;
+	if (temp.length() == 1)
 	{
-		for (int j = 0; j < 10; j++)
-			cout << dp[i][j] << " ";
-		cout << endl;
+		cout << w << endl;
+		return;
+
 	}
-	cout << endl;
-	cout << "l1 l2= " << l1 << " " << l2 << endl;
-	if(!l1|!l2)
-		return 0;
-	for (int i=0;i<l1;i++)
-		for (int j = 0; j < l2; j++)
+	for (int i = 1; i<temp.length(); i++)
+	{
+		string l = temp.substr(0, i+1);
+		if (dic.find(l) != dic.end())
 		{
-			if (i == 0|j==0)
-			{
-				if (s1[i] == s2[j])
-				{
-					dp[i][j] = 1;
-					if (dp[i][j] > max_length)
-					{
-						max_length = dp[i][j];
-						max_idx1 = i;
-						max_idx2 = j;
-					}
-					
-				}
-			}
-			else {
-				if (s1[i] == s2[j])
-				{
-					dp[i][j] = dp[i - 1][j - 1] + 1;
-					if (dp[i][j] > max_length)
-					{
-						max_length = dp[i][j];
-						max_idx1 = i;
-						max_idx2 = j;
-					}
-					
-				}
-				else
-				{
-					dp[i][j] = 0;
-				}
-					
-			}
+			long_s = l;
+			//cout << "999 " << long_s << endl;
 		}
-	for (int i = 0; i < l1; i++)
-	{
-		for (int j = 0; j < l2; j++)
-			cout << dp[i][j] << " ";
-		cout << endl;
+
 	}
-	cout << max_idx1 << "  " << max_idx2 << endl;
-	cout << "max_length " << max_length << endl;
-	return s1.substr(max_idx1-max_length+1,max_length);
+	cout << long_s << " -- " ;
+	st = st + long_s.length();
+	//cout << st << "  st" << endl;
+	return;
 }
